@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Coding Challenge – “From Form to PDF”
 
-## Getting Started
+Welcome!  
+You’ll build a tiny Next.js feature that takes **user-submitted data + an uploaded file** and turns it into a **single PDF**.  
+Most details are intentionally vague so you can show us how you think, structure data, and make trade-offs.
 
-First, run the development server:
+---
+
+## 1 . The (deliberately loose) user flow
+
+1. **Entry point** – A user visits `/apply`.
+2. **Form** – They fill out basic personal details _and_ specify their **current job description** (plain text).
+3. **Upload** – They attach **one supporting document** (pdf file type).
+4. **Submit** – After the form posts:
+   - Persist everything somewhere in the repo (FS, JSON - your choice, but no need to integrate a blob storage).
+   - Generate a **PDF** that contains:
+     - The user’s personal details (as a nicely formatted header).
+     - The job-description paragraph they typed.
+     - _Any_ content you choose from the uploaded file (or a note that it’s been stored).
+   - Return a link or modal so the user can download that PDF.
+
+That’s all! How you design the data model and plumbing is up to you.
+
+---
+
+## 2.a. Starter repo
+
+We give you a minimal **Next.js 14 / TypeScript** skeleton:
+
+Feel free to reorganize folders, add libs, or install packages.
+
+Next.js gives us the convenience of using their serverless api package, instead of needing to spin up a separate api server. Feel free to use it.
+
+## 2.b. 💾 Database Instructions
+
+To keep this project self-contained, we’ll use **SQLite** with Prisma.
+
+No hosted database is needed. Just follow these steps:
+
+### Set up
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
+npx prisma db push
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 3 . What we care about
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Area                   | What to demonstrate                                                                                                                     |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data modeling**      | Show your reasoning: TS interfaces, Prisma schema, SQL DDL—any clear representation of how “User”, “Submission”, and “Document” relate. |
+| **Code structure**     | Separation of concerns, clear naming, testability.                                                                                      |
+| **PDF generation**     | Library choice is yours (`pdf-lib`, `@react-pdf/renderer`, LaTeX + puppeteer, etc.). The result just needs to open.                     |
+| **DX & README**        | `pnpm install && pnpm dev` should run; explain any env vars or scripts.                                                                 |
+| **Edge-case thinking** | Basic validation, error feedback, graceful failure on large files.                                                                      |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 4 . Deliverables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Running code** committed to your repo.
+2. **`/design` folder** with a short Markdown note explaining:
+   - Your data model (ER diagram, schema file, or bullet list).
+   - How the request travels through your code.
+3. (Optional) Unit or integration tests showing something you deem critical.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 5 . Ground rules & hints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Topic            | Guideline                                                                      |
+| ---------------- | ------------------------------------------------------------------------------ |
+| **File storage** | Skip S3/GCS; writing to `./uploads` (git-ignored) is fine.                     |
+| **Styling**      | Keep UI minimal—focus is backend logic.                                        |
+| **Libraries**    | Use anything publicly available via npm.                                       |
+| **Secrets**      | Don’t commit API keys. If you need an env var, add an entry to `.env.example`. |
+| **Time box**     | It’s okay to annotate unfinished areas with TODOs.                             |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 6 . How to submit - Fork & Pull Request
+
+1. Fork this repo to your own GitHub account (public is fine).
+2. Complete the project in your fork.
+3. Open a Pull Request **to this repo’s `main` branch**.
+4. In the PR description, include your name and anything you want us to know.
+
+Looking forward to seeing your approach—have fun and surprise us!
